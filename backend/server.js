@@ -1,10 +1,13 @@
 // server.js
-const express = require('express');
-const cors = require('cors');
 const dotenv = require('dotenv');
-
 // تنظیمات env
 dotenv.config();
+
+const express = require('express');
+const cors = require('cors');
+const db = require('./src/config/db');
+
+
 
 // ایجاد اپلیکیشن Express
 const app = express();
