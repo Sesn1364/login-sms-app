@@ -6,7 +6,7 @@ dotenv.config();
 const express = require('express');
 const cors = require('cors');
 const db = require('./src/config/db');
-
+const authRoutes = require('./src/routes/authRoutes');
 
 
 // ایجاد اپلیکیشن Express
@@ -15,6 +15,9 @@ const app = express();
 // Middlewareها
 app.use(cors());
 app.use(express.json());
+
+// مسیرهای احراز هویت
+app.use('/api/auth', authRoutes);
 
 // تست ساده برای اطمینان از کارکرد سرور
 app.get('/', (req, res) => {
