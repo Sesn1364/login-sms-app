@@ -1,0 +1,144 @@
+# ========================
+# GENERAL
+# ========================
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+*.orig
+*.rej
+*.zip
+*.tar.gz
+*.tgz
+
+# ========================
+# NODE / JAVASCRIPT
+# ========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# ========================
+# BUILD OUTPUT
+# ========================
+dist/
+build/
+out/
+coverage/
+tmp/
+.cache/
+.next/
+.nuxt/
+.svelte-kit/
+.vite/
+vite.config.timestamp-*
+*.tsbuildinfo
+
+# ========================
+# ENVIRONMENT FILES
+# ========================
+.env
+.env.*.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# ========================
+# IDE / EDITOR CONFIGS
+# ========================
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+*.iml
+
+# ========================
+# OS FILES
+# ========================
+ehthumbs.db
+Icon?
+Desktop.ini
+
+# ========================
+# DATABASE / BACKEND
+# ========================
+*.db
+*.sqlite
+*.sqlite3
+*.sql
+*.db-journal
+
+# ========================
+# BACKEND (Node/Express)
+# ========================
+logs/
+pids/
+*.pid
+*.seed
+*.pid.lock
+lib-cov/
+coverage/
+.nyc_output/
+
+# ========================
+# REACT / FRONTEND
+# ========================
+*.map
+*.cache
+.eslintcache
+stylelintcache
+.cache-loader
+public/static/
+public/assets/
+!.gitkeep
+
+# ========================
+# TEST / CI
+# ========================
+jest-html-reporters-*.html
+test-results/
+coverage/
+.cypress/
+playwright-report/
+test-output/
+
+# ========================
+# DOCKER
+# ========================
+.docker/
+docker-compose.override.yml
+docker-compose.dev.yml
+docker-compose.prod.yml
+
+# ========================
+# MISC
+# ========================
+*.pem
+*.key
+*.crt
+*.pfx
+*.p12
+*.cer
+*.csr
+
+# ========================
+# LOCAL ENVIRONMENT
+# ========================
+.envrc
+.env.local
+*.local.json
+
+# ========================
+# VSCODE SETTINGS
+# ========================
+.history/
+*.code-workspace
