@@ -60,7 +60,7 @@ exports.loginUser = (req, res) => {
     const token = jwt.sign(
       { id: user.id, username: user.username },
       process.env.JWT_SECRET,
-      { expiresIn: '1h' }
+      { expiresIn: '1m' }
     );
 
     res.json({ message: 'ورود موفق', token });

@@ -7,6 +7,7 @@ const express = require('express');
 const cors = require('cors');
 const db = require('./src/config/db');
 const authRoutes = require('./src/routes/authRoutes');
+const userRoutes = require('./src/routes/userRoutes');
 
 
 // ایجاد اپلیکیشن Express
@@ -18,6 +19,9 @@ app.use(express.json());
 
 // مسیرهای احراز هویت
 app.use('/api/auth', authRoutes);
+
+// مسیرهای محافظت‌شده کاربران (مثل dashboard)
+app.use('/api/users', userRoutes);
 
 // تست ساده برای اطمینان از کارکرد سرور
 app.get('/', (req, res) => {
