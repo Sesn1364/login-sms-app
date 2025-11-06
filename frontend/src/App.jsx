@@ -1,17 +1,7 @@
-// import React from "react";
-// import LoginPage from "./pages/LoginPage";
-
-// function App() {
-//   return <LoginPage />;
-// }
-
-// export default App;
-
-
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
-import Dashboard from "./components/Dashboard";
+import Dashboard from "./pages/DashboardPage";
 
 function App() {
   return (
