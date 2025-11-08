@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import LoginForm from "../components/LoginForm";
+import LoginForm from "../components/login-form/LoginForm";
 import ForgotPasswordForm from "../components/ForgotPasswordForm";
+import loginIllustration from "../assets/login/mobile-e.90fccca8dfc3f8f3c4a4.png";
 
 export default function LoginPage() {
   const [activeTab, setActiveTab] = useState("login");
@@ -12,7 +13,7 @@ export default function LoginPage() {
         {/* سمت چپ: تصویر */}
         <div className="w-1/2 bg-black flex items-center justify-center">
           <img
-            src="/login-illustration.png" // بعداً تصویر واقعی رو جایگزین کن
+            src={loginIllustration} 
             alt="Login Illustration"
             className="object-cover w-full h-full"
           />
