@@ -8,19 +8,19 @@ export default function LoginPage() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="flex bg-white rounded-2xl shadow-lg overflow-hidden w-[900px]">
+      <div className="flex bg-white rounded-2xl shadow-lg overflow-hidden w-[65%] h-[85vh]">
         
         {/* سمت چپ: تصویر */}
-        <div className="w-1/2 bg-black flex items-center justify-center">
+        <div className="w-3/5 bg-black flex items-center justify-center">
           <img
             src={loginIllustration} 
             alt="Login Illustration"
-            className="object-cover w-full h-full"
+            className="object-contain w-full h-full"
           />
         </div>
 
         {/* سمت راست: فرم لاگین */}
-        <div className="w-1/2 p-10 text-right">
+        <div className="w-2/5 p-10 text-right">
           <img
             src="/mobiinnet-logo.png" // لوگوی مبین‌نت
             alt="Mobiinnet Logo"
