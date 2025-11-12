@@ -17,14 +17,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// مسیرهای احراز هویت
+//  (ثبت نام و ورود)مسیرهای احراز هویت
 app.use('/api/auth', authRoutes);
 
 // مسیرهای محافظت‌شده کاربران (مثل dashboard)
 app.use('/api/users', userRoutes);
 
 // تست ساده برای اطمینان از کارکرد سرور
-app.get('/', (req, res) => {
+app.get('/', (_, res) => {
   res.send('✅ Backend is running successfully!');
 });
 
