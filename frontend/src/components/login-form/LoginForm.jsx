@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginForm() {
   const [mobile, setMobile] = useState("");
   const [password, setPassword] = useState("");
   const [captcha, setCaptcha] = useState("");
   const [message, setMessage] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,7 +24,7 @@ export default function LoginForm() {
         setMessage("✅ ورود موفقیت‌آمیز بود!");
         localStorage.setItem("token", response.data.token); // ✅ اصلاح شد
         console.log("Token:", response.data.token); // فعلاً فقط در کنسول نشون می‌دیم
-        window.location.href = "/dashboard"; // ✅ هدایت به داشبورد
+        navigate("/dashboard");
       }
     } catch (error) {
       console.error("Login error:", error);
@@ -69,9 +72,8 @@ export default function LoginForm() {
 
       {message && (
         <p
-          className={`text-center mt-2 ${
-            message.startsWith("✅") ? "text-green-600" : "text-red-600"
-          }`}
+          className={`text-center mt-2 ${message.startsWith("✅") ? "text-green-600" : "text-red-600"
+            }`}
         >
           {message}
         </p>
