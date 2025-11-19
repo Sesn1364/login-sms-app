@@ -1,35 +1,38 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import axios from "axios";
 
 export default function Dashboard() {
+  const [user, setUser] = useState(null); // اطلاعات کاربر
+  const [loading, setLoading] = useState(true); // حالت بارگذاری
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      navigate("/");
-      return;
-    }
+    let mounted = true;
 
-    try {
-      const decoded = jwtDecode(token);
-      const currentTime = Date.now() / 1000; // تبدیل به ثانیه
+    // درخواست به سرور برای گرفتن اطلاعات کاربر
+    axios
+      .get("http://localhost:5000/api/auth/me", { withCredentials: true })
+      .then((res) => {
+        if (!mounted) return;
+        setUser(res.data.user);
+        setLoading(false);
+      })
+      .catch((err) => {
+        if (!mounted) return;
+        console.error("Auth error:", err);
+        setLoading(false);
+        navigate("/"); // اگر لاگین نکرده یا توکن منقضی، بازگشت به صفحه ورود
+      });
 
-      if (decoded.exp < currentTime) {
-        // توکن منقضی شده
-        alert("زمان جلسه‌ی شما به پایان رسیده. لطفاً دوباره وارد شوید.");
-        localStorage.removeItem("token");
-        navigate("/");
-      }
-    } catch (err) {
-      console.error("Invalid token:", err);
-      localStorage.removeItem("token");
-      navigate("/");
-    }
+    return () => {
+      mounted = false;
+    };
   }, [navigate]);
 
-  const token = localStorage.getItem("token");
+  if (loading) {
+    return <div>در حال بارگذاری داشبورد...</div>; // یا spinner
+  }
 
   return (
     <div className="p-6">
@@ -37,13 +40,17 @@ export default function Dashboard() {
         🎉 خوش اومدی به داشبورد!
       </h1>
 
-      {token ? (
-        <p className="text-gray-700 break-words">
-          <strong>توکن شما:</strong>{" "}
-          <span className="font-mono text-sm">{token}</span>
-        </p>
+      {user ? (
+        <div className="text-gray-700">
+          <p>
+            <strong>نام کاربری:</strong> {user.username}
+          </p>
+          <p>
+            <strong>شماره موبایل:</strong> {user.phone}
+          </p>
+        </div>
       ) : (
-        <p className="text-red-600">توکن پیدا نشد!</p>
+        <p className="text-red-600">اطلاعات کاربر بارگذاری نشد!</p>
       )}
     </div>
   );
