@@ -63,6 +63,14 @@ exports.loginUser = (req, res) => {
       { expiresIn: '1m' }
     );
 
+    // ارسال توکن در کوکی HttpOnly
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false, // برای لوکال false باشد - در https باید true شود
+      sameSite: "lax",
+      maxAge: 60 * 1000, // یک دقیقه
+    });
+
     res.json({ message: 'ورود موفق', token });
   });
 };

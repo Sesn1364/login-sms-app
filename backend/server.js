@@ -5,17 +5,22 @@ dotenv.config();
 
 const express = require('express');
 const cors = require('cors');
+const cookieParser = require("cookie-parser");
 const db = require('./src/config/db');
-const authRoutes = require('./src/routes/authRoutes');
 const userRoutes = require('./src/routes/userRoutes');
+const authRoutes = require('./src/routes/authRoutes');
 
 
 // ایجاد اپلیکیشن Express
 const app = express();
 
 // Middlewareها
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true,
+}));
 app.use(express.json());
+app.use(cookieParser());
 
 //  (ثبت نام و ورود)مسیرهای احراز هویت
 app.use('/api/auth', authRoutes);
