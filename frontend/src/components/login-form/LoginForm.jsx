@@ -10,21 +10,25 @@ export default function LoginForm() {
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => { 
     e.preventDefault();
-    setMessage(""); // پاک کردن پیام قبلی
+    setMessage("");
 
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/login", {
-        phone: mobile,
-        password,
-      });
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        {
+          phone: mobile,
+          password,
+        },
+        {
+          withCredentials: true, // 🔥 مهم: دریافت کوکی HttpOnly
+        }
+      );
 
       if (response.status === 200) {
         setMessage("✅ ورود موفقیت‌آمیز بود!");
-        localStorage.setItem("token", response.data.token); // ✅ اصلاح شد
-        console.log("Token:", response.data.token); // فعلاً فقط در کنسول نشون می‌دیم
-        navigate("/dashboard");
+        navigate("/dashboard"); // بدون ذخیره توکن
       }
     } catch (error) {
       console.error("Login error:", error);
@@ -41,6 +45,7 @@ export default function LoginForm() {
         onChange={(e) => setMobile(e.target.value)}
         className="w-full p-3 border rounded-lg focus:outline-green-600"
       />
+
       <input
         type="password"
         placeholder="رمز عبور"
@@ -48,6 +53,7 @@ export default function LoginForm() {
         onChange={(e) => setPassword(e.target.value)}
         className="w-full p-3 border rounded-lg focus:outline-green-600"
       />
+
       <div className="flex items-center gap-2">
         <img
           src="/captcha-example.png"
@@ -72,8 +78,9 @@ export default function LoginForm() {
 
       {message && (
         <p
-          className={`text-center mt-2 ${message.startsWith("✅") ? "text-green-600" : "text-red-600"
-            }`}
+          className={`text-center mt-2 ${
+            message.startsWith("✅") ? "text-green-600" : "text-red-600"
+          }`}
         >
           {message}
         </p>
