@@ -74,3 +74,19 @@ exports.loginUser = (req, res) => {
     res.json({ message: 'ورود موفق', token });
   });
 };
+
+// 📌 دریافت اطلاعات کاربر لاگین شده
+exports.getMe = (req, res) => {
+  const userId = req.user.id;
+
+  const query = "SELECT id, username, phone FROM users WHERE id = ?";
+  db.query(query, [userId], (err, results) => {
+    if (err) return res.status(500).json({ message: "خطای سرور" });
+
+    if (results.length === 0) {
+      return res.status(404).json({ message: "کاربر یافت نشد" });
+    }
+
+    res.json({ user: results[0] });
+  });
+};

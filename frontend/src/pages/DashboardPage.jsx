@@ -46,7 +46,8 @@ export default function Dashboard() {
             <strong>نام کاربری:</strong> {user.username}
           </p>
           <p>
-            <strong>شماره موبایل:</strong> {user.phone}
+          <strong>شماره موبایل:</strong>
+          <span dir="ltr" className="ml-2 inline-block">{user.phone}</span>
           </p>
         </div>
       ) : (
