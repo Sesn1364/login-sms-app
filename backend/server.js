@@ -9,6 +9,7 @@ const cookieParser = require("cookie-parser");
 const db = require('./src/config/db');
 const userRoutes = require('./src/routes/userRoutes');
 const authRoutes = require('./src/routes/authRoutes');
+const captchaRoutes = require('./src/routes/captchaRoutes');
 
 
 // ایجاد اپلیکیشن Express
@@ -27,6 +28,8 @@ app.use('/api/auth', authRoutes);
 
 // مسیرهای محافظت‌شده کاربران (مثل dashboard)
 app.use('/api/users', userRoutes);
+
+app.use('/api/captcha', captchaRoutes);
 
 // تست ساده برای اطمینان از کارکرد سرور
 app.get('/', (_, res) => {
