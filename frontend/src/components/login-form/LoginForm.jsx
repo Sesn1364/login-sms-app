@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Captcha from "../Captcha";
 
 export default function LoginForm() {
   const [mobile, setMobile] = useState("");
   const [password, setPassword] = useState("");
   const [captcha, setCaptcha] = useState("");
+  const [captchaId, setCaptchaId] = useState(null);
+  const [refreshCaptchaFn, setRefreshCaptchaFn] = useState(null);
   const [message, setMessage] = useState("");
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => { 
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
 
@@ -20,6 +23,8 @@ export default function LoginForm() {
         {
           phone: mobile,
           password,
+          captcha,
+          captchaId,
         },
         {
           withCredentials: true, // 🔥 مهم: دریافت کوکی HttpOnly
@@ -31,8 +36,15 @@ export default function LoginForm() {
         navigate("/dashboard"); // بدون ذخیره توکن
       }
     } catch (error) {
-      console.error("Login error:", error);
-      setMessage("❌ ورود ناموفق. لطفاً اطلاعات را بررسی کنید.");
+      if (error.response?.data?.message) {
+        setMessage("❌ " + error.response.data.message);
+      } else {
+        setMessage("❌ ورود ناموفق. لطفاً اطلاعات را بررسی کنید.");
+      }
+
+      // رفرش خودکار کپچا بعد از خطا
+      if (refreshCaptchaFn) refreshCaptchaFn();
+      setCaptcha("");
     }
   };
 
@@ -54,12 +66,12 @@ export default function LoginForm() {
         className="w-full p-3 border rounded-lg focus:outline-green-600"
       />
 
-      <div className="flex items-center gap-2">
-        <img
-          src="/captcha-example.png"
-          alt="captcha"
-          className="h-10 border rounded"
+      <div className="flex items-center gap-3">
+        <Captcha
+          onChange={({ captchaId }) => setCaptchaId(captchaId)}
+          onRefresh={(fn) => setRefreshCaptchaFn(() => fn)}
         />
+
         <input
           type="text"
           placeholder="کد داخل تصویر را وارد کنید"
@@ -78,9 +90,8 @@ export default function LoginForm() {
 
       {message && (
         <p
-          className={`text-center mt-2 ${
-            message.startsWith("✅") ? "text-green-600" : "text-red-600"
-          }`}
+          className={`text-center mt-2 ${message.startsWith("✅") ? "text-green-600" : "text-red-600"
+            }`}
         >
           {message}
         </p>
