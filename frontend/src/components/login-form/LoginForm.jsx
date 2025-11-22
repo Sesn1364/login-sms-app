@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Captcha from "../Captcha";
+import { getErrorMessage } from "./errorMessage";
 
 export default function LoginForm() {
   const [mobile, setMobile] = useState("");
@@ -36,11 +37,8 @@ export default function LoginForm() {
         navigate("/dashboard"); // بدون ذخیره توکن
       }
     } catch (error) {
-      if (error.response?.data?.message) {
-        setMessage("❌ " + error.response.data.message);
-      } else {
-        setMessage("❌ ورود ناموفق. لطفاً اطلاعات را بررسی کنید.");
-      }
+      const msg = getErrorMessage(error);   // پیام از فایل جدا می‌آید
+      setMessage("❌ " + msg);
 
       // رفرش خودکار کپچا بعد از خطا
       if (refreshCaptchaFn) refreshCaptchaFn();
