@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Captcha from "../Captcha";
-import { getErrorMessage } from "./errorMessage";
+import { useLogin } from "./useLogin";
 
 export default function LoginForm() {
   const [mobile, setMobile] = useState("");
@@ -14,37 +13,16 @@ export default function LoginForm() {
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setMessage("");
-
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
-        {
-          phone: mobile,
-          password,
-          captcha,
-          captchaId,
-        },
-        {
-          withCredentials: true, // 🔥 مهم: دریافت کوکی HttpOnly
-        }
-      );
-
-      if (response.status === 200) {
-        setMessage("✅ ورود موفقیت‌آمیز بود!");
-        navigate("/dashboard"); // بدون ذخیره توکن
-      }
-    } catch (error) {
-      const msg = getErrorMessage(error);   // پیام از فایل جدا می‌آید
-      setMessage("❌ " + msg);
-
-      // رفرش خودکار کپچا بعد از خطا
-      if (refreshCaptchaFn) refreshCaptchaFn();
-      setCaptcha("");
-    }
-  };
+  const { handleSubmit } = useLogin({
+    navigate,
+    setMessage,
+    refreshCaptchaFn,
+    setCaptcha,
+    captcha,
+    mobile,
+    password,
+    captchaId
+  });
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
